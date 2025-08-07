@@ -1,7 +1,9 @@
 import pygame
 import random
 from pygame.math import Vector2
-from Objects.bullet import *
+from Objects.movingObj import MovingObj
+from Objects.bullet import Bullet
+from Objects.robot import Robot
 
 
 if __name__ == "__main__":
@@ -22,6 +24,13 @@ if __name__ == "__main__":
         bullet.angle = angles[i]  # Set an angle for the bullet
         moving_objs.append(bullet) # append the bullet to the moving objects list
 
+    for i in range(3):
+        robot = Robot(name=f"Robot{i+1}")
+        robot.position = Vector2(random.randint(0, screen_width), random.randint(0, screen_height))
+        robot.angle = random.choice(angles)  # Random angle for the robot
+        robot.stop()  # Stop the robot initially
+        moving_objs.append(robot)
+
 
     running = True
     while running:
@@ -37,9 +46,12 @@ if __name__ == "__main__":
         screen.fill((0, 0, 0))  # Fill the screen with black
 
         for moving_obj in moving_objs:
-            if isinstance(moving_obj, MovingObj):
+            if isinstance(moving_obj, Bullet):
                 next_pos = moving_obj.getNextPos(unit=5)
                 pygame.draw.rect(screen, (255, 0, 0), (next_pos.x, next_pos.y, bullet.bsize, bullet.bsize))
+            if isinstance(moving_obj, Robot):
+                image = pygame.image.load("images/small.png")
+                screen.blit(image, moving_obj.position)
 
         pygame.display.flip()
 

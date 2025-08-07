@@ -8,9 +8,9 @@ class MovingObj:
         self.position = Vector2(0, 0)
         self.angle = 0
 
-    def getNextPos(self):
+    def getNextPos(self, unit=10.0):
         if self.isMoving:
-            dx = -math.sin(math.radians(self.angle)) * 10.0
-            dy = math.cos(math.radians(self.angle)) * 10.0
+            dx = -math.sin(math.radians(self.angle)) * unit
+            dy = math.cos(math.radians(self.angle)) * unit 
             self.position = Vector2(self.position.x + dx, self.position.y + dy)
         return self.position

@@ -14,11 +14,12 @@ if __name__ == "__main__":
     # all moving objects list
     moving_objs = []
 
-    for _ in range(5):  # Create 5 bullets for demonstration
+    angles = [0, 45, 90, 135, 180, 225, 270, 315]
+    for i in range(8):  # Create 5 bullets for demonstration
         bullet = Bullet(power=9, bot=None)  # Assuming bot is not used in this context
         bullet.position = Vector2(screen_width//2, screen_height//2)  # Start in the center of the screen
         bullet.isMoving = True
-        bullet.angle = random.randint(0, 360)  # Set an angle for the bullet
+        bullet.angle = angles[i]  # Set an angle for the bullet
         moving_objs.append(bullet) # append the bullet to the moving objects list
 
 

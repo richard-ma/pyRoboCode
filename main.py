@@ -1,4 +1,5 @@
 import pygame
+import random
 from pygame.math import Vector2
 from Objects.bullet import *
 
@@ -10,13 +11,16 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Python RoboCode")
 
-    width, height = 50, 50
-    centerx, centery = screen.get_width() // 2, screen.get_height() // 2
-    rect = pygame.Rect((centerx-width//2, centery-height//2), (width, height))
-    bullet = Bullet(power=9, bot=None)  # Assuming bot is not used in this context
-    bullet.position = Vector2(centerx, centery)
-    bullet.isMoving = True
-    # bullet.angle = 0  # Set an angle for the bullet
+    # all moving objects list
+    moving_objs = []
+
+    for _ in range(5):  # Create 5 bullets for demonstration
+        bullet = Bullet(power=9, bot=None)  # Assuming bot is not used in this context
+        bullet.position = Vector2(screen_width//2, screen_height//2)  # Start in the center of the screen
+        bullet.isMoving = True
+        bullet.angle = random.randint(0, 360)  # Set an angle for the bullet
+        moving_objs.append(bullet) # append the bullet to the moving objects list
+
 
     running = True
     while running:
@@ -31,8 +35,10 @@ if __name__ == "__main__":
 
         screen.fill((0, 0, 0))  # Fill the screen with black
 
-        next_pos = bullet.getNextPos(unit=5)  # Get the next position of the bullet
-        pygame.draw.rect(screen, (255, 0, 0), (next_pos.x, next_pos.y, bullet.bsize, bullet.bsize))
+        for moving_obj in moving_objs:
+            if isinstance(moving_obj, MovingObj):
+                next_pos = moving_obj.getNextPos(unit=5)
+                pygame.draw.rect(screen, (255, 0, 0), (next_pos.x, next_pos.y, bullet.bsize, bullet.bsize))
 
         pygame.display.flip()
 

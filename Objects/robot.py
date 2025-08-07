@@ -22,15 +22,18 @@ class Robot(MovingObj):
         self.health = 100
         self.bullets = []
 
+    def lockTurn(self):
+        pass # Override to prevent turning
+    
     def move(self):
-        self.isMoving = True
+        super().move()
+        self.gun.move()
+        self.radar.move()
 
     def stop(self):
-        self.isMoving = False
-
-    def turn(self, angle):
-        self.angle += angle
-        self.angle %= 360  # Normalize angle to [0, 360)
+        super().stop()
+        self.gun.stop()
+        self.radar.stop()
 
     def fire(self, power):
         # make bullet

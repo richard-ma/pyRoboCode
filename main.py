@@ -5,6 +5,7 @@ from Objects.movingObj import MovingObj
 from Objects.bullet import Bullet
 from Objects.robot import Robot
 from UI.bulletUI import BulletUI
+from UI.robotUI import RobotUI
 
 
 if __name__ == "__main__":
@@ -51,8 +52,8 @@ if __name__ == "__main__":
                 bulletUI = BulletUI(moving_obj)
                 bulletUI.update(screen)
             if isinstance(moving_obj, Robot):
-                image = pygame.image.load("images/small.png")
-                screen.blit(image, moving_obj.position)
+                robotUI = RobotUI(moving_obj)
+                robotUI.update(screen)
 
         pygame.display.flip()
 

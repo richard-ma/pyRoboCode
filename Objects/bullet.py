@@ -4,11 +4,12 @@
 import os
 import math
 from pygame.math import Vector2
+from Objects.movingObj import MovingObj
 
 
-class Bullet:
+class Bullet(MovingObj):
     def __init__(self, power, bot):
-        self.isfired = False
+        super().__init__()
         self.setPower(power)
         self.setBsize(power)
         self.robot = bot
@@ -20,12 +21,6 @@ class Bullet:
     def setBsize(self, bsize):
         bsize = max(4, min(bsize, 10)) # 4 <= bsize <= 10
         self.bsize = bsize
-        
-    def init(self, pos, angle):
-        self.angle = angle
-        self.pos = Vector2(pos)
-        self.isfired = True
-
         
     # def setColour(self, color):
     #     mask = self.pixmap.createMaskFromColor(self.maskColor,  1)

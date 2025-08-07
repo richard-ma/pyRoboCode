@@ -4,6 +4,7 @@ from Objects.bullet import *
 
 
 if __name__ == "__main__":
+    fps = 30
     screen_width, screen_height = 800, 600
     pygame.init()
     screen = pygame.display.set_mode((screen_width, screen_height))
@@ -18,7 +19,7 @@ if __name__ == "__main__":
 
     running = True
     while running:
-        pygame.time.Clock().tick(30)  # Limit to 60 FPS
+        pygame.time.Clock().tick(fps)  # Limit to 60 FPS
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT: # Check for window close

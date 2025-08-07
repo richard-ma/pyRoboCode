@@ -10,7 +10,7 @@ class MovingObj:
 
     def getNextPos(self, unit=10.0):
         if self.isMoving:
-            dx = -math.sin(math.radians(self.angle)) * unit
-            dy = math.cos(math.radians(self.angle)) * unit 
+            dx = math.sin(math.radians(self.angle)) * unit
+            dy = - math.cos(math.radians(self.angle)) * unit # y axis is inverted in pygame
             self.position = Vector2(self.position.x + dx, self.position.y + dy)
         return self.position

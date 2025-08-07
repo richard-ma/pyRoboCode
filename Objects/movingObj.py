@@ -1,3 +1,4 @@
+import math
 from pygame.math import Vector2
 
 
@@ -7,5 +8,9 @@ class MovingObj:
         self.position = Vector2(0, 0)
         self.angle = 0
 
-    def advance(self):
-        pass
+    def getNextPos(self):
+        if self.isMoving:
+            dx = -math.sin(math.radians(self.angle)) * 10.0
+            dy = math.cos(math.radians(self.angle)) * 10.0
+            self.position = Vector2(self.position.x + dx, self.position.y + dy)
+        return self.position

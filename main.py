@@ -4,6 +4,7 @@ from pygame.math import Vector2
 from Objects.movingObj import MovingObj
 from Objects.bullet import Bullet
 from Objects.robot import Robot
+from UI.bulletUI import BulletUI
 
 
 if __name__ == "__main__":
@@ -47,8 +48,8 @@ if __name__ == "__main__":
 
         for moving_obj in moving_objs:
             if isinstance(moving_obj, Bullet):
-                next_pos = moving_obj.getNextPos(unit=5)
-                pygame.draw.rect(screen, (255, 0, 0), (next_pos.x, next_pos.y, bullet.bsize, bullet.bsize))
+                bulletUI = BulletUI(moving_obj)
+                bulletUI.update(screen)
             if isinstance(moving_obj, Robot):
                 image = pygame.image.load("images/small.png")
                 screen.blit(image, moving_obj.position)

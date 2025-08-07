@@ -3,65 +3,50 @@
 
 import os
 import math
+from pygame.math import Vector2
 
-from PyQt5.QtWidgets import QGraphicsPixmapItem
-from PyQt5.QtGui import QPixmap, QColor, QPainter
 
-class Bullet(QGraphicsPixmapItem):
-    
-    def __init__(self, power, color, bot):
-        QGraphicsPixmapItem.__init__(self)
-        #graphics
-        self.maskColor = QColor(255, 128, 0)
-        self.pixmap = QPixmap(os.getcwd() + "/robotImages/blast.png")
-        self.setPixmap(self.pixmap)
-        self.setColour(color)
+class Bullet:
+    def __init__(self, power, bot):
         self.isfired = False
-        #physics
-        self.width = self.boundingRect().width()
-        self.height = self.boundingRect().height()
-        if power <=0.5:
-            power = 0.5
-        elif power >= 10:
-            power = 10
-        self.power = power
-        bsize = power
-        if power < 3:
-            bsize = 4
-        self.pixmap = self.pixmap.scaled(bsize, bsize)
-        self.setPixmap(self.pixmap)
+        self.setPower(power)
+        self.setBsize(power)
         self.robot = bot
-        
-    def init(self, pos, angle, scene):
 
+    def setPower(self, power):
+        power = max(0.5, min(power, 10)) # 0.5 <= power <= 10
+        self.power = power
+
+    def setBsize(self, bsize):
+        bsize = max(4, min(bsize, 10)) # 4 <= bsize <= 10
+        self.bsize = bsize
+        
+    def init(self, pos, angle):
         self.angle = angle
-        self.setPos(pos)
-        self.scene = scene
+        self.pos = Vector2(pos)
         self.isfired = True
 
         
-    def setColour(self, color):
-        mask = self.pixmap.createMaskFromColor(self.maskColor,  1)
-        p = QPainter(self.pixmap)
-        p.setPen(color)
-        p.drawPixmap(self.pixmap.rect(), mask, mask.rect())
-        p.end()
-        self.setPixmap(self.pixmap)
-        self.maskColor = color
+    # def setColour(self, color):
+    #     mask = self.pixmap.createMaskFromColor(self.maskColor,  1)
+    #     p = QPainter(self.pixmap)
+    #     p.setPen(color)
+    #     p.drawPixmap(self.pixmap.rect(), mask, mask.rect())
+    #     p.end()
+    #     self.setPixmap(self.pixmap)
+    #     self.maskColor = color
         
-    def advance(self, i):
-        if self.isfired:
-            
-            pos = self.pos()
-            x = pos.x()
-            y = pos.y()
-            dx = - math.sin(math.radians(self.angle))*10.0
-            dy = math.cos(math.radians(self.angle))*10.0
-            self.setPos(x+dx, y+dy)
-            if x < 0 or y < 0 or x > self.scene.width or y > self.scene.height:
-                self.robot.onBulletMiss(id(self))
-                self.scene.removeItem(self)
-                self.robot.removeMyProtectedItem(self)
+    # def advance(self):
+    #     if self.isfired:
+    #         pos = self.pos
+    #         x, y = pos.x, pos.y
+    #         dx = - math.sin(math.radians(self.angle))*10.0
+    #         dy = math.cos(math.radians(self.angle))*10.0
+    #         self.setPos(x+dx, y+dy)
+    #         if x < 0 or y < 0 or x > self.scene.width or y > self.scene.height:
+    #             self.robot.onBulletMiss(id(self))
+    #             self.scene.removeItem(self)
+    #             self.robot.removeMyProtectedItem(self)
 
         
             

@@ -15,8 +15,9 @@ class Radar(MovingObj):
         super().__init__()
         
 class Robot(MovingObj):
-    def __init__(self):
+    def __init__(self, name):
         super().__init__()
+        self.name = name
         self.gun = Gun()
         self.radar = Radar()
         self.health = 100

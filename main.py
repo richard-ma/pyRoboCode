@@ -13,9 +13,10 @@ if __name__ == "__main__":
     width, height = 50, 50
     centerx, centery = screen.get_width() // 2, screen.get_height() // 2
     rect = pygame.Rect((centerx-width//2, centery-height//2), (width, height))
-    bullet = Bullet(power=5, bot=None)  # Assuming bot is not used in this context
+    bullet = Bullet(power=9, bot=None)  # Assuming bot is not used in this context
     bullet.position = Vector2(centerx, centery)
     bullet.isMoving = True
+    # bullet.angle = 0  # Set an angle for the bullet
 
     running = True
     while running:
@@ -29,9 +30,10 @@ if __name__ == "__main__":
                     running = False
 
         screen.fill((0, 0, 0))  # Fill the screen with black
-        bullet.angle = 45  # Set an angle for the bullet
-        next_pos = bullet.getNextPos()  # Get the next position of the bullet
+
+        next_pos = bullet.getNextPos(unit=5)  # Get the next position of the bullet
         pygame.draw.rect(screen, (255, 0, 0), (next_pos.x, next_pos.y, bullet.bsize, bullet.bsize))
+
         pygame.display.flip()
 
     pygame.quit()

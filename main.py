@@ -24,7 +24,7 @@ if __name__ == "__main__":
         bullet.position = Vector2(screen_width//2, screen_height//2)  # Start in the center of the screen
         bullet.isMoving = True
         bullet.angle = angles[i]  # Set an angle for the bullet
-        moving_objs.append(bullet) # append the bullet to the moving objects list
+        # moving_objs.append(bullet) # append the bullet to the moving objects list
 
     for i in range(3):
         robot = Robot(name=f"Robot{i+1}")
@@ -48,10 +48,13 @@ if __name__ == "__main__":
         screen.fill((0, 0, 0))  # Fill the screen with black
 
         for moving_obj in moving_objs:
+            # bullet instance
             if isinstance(moving_obj, Bullet):
                 bulletUI = BulletUI(moving_obj)
                 bulletUI.update(screen)
+            # robot instance
             if isinstance(moving_obj, Robot):
+                moving_obj.angle = angles[i]
                 robotUI = RobotUI(moving_obj)
                 robotUI.update(screen)
 

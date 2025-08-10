@@ -9,7 +9,7 @@ from UI.robotUI import RobotUI
 
 
 if __name__ == "__main__":
-    fps = 30
+    fps = 1
     screen_width, screen_height = 800, 600
     pygame.init()
     screen = pygame.display.set_mode((screen_width, screen_height))
@@ -30,7 +30,8 @@ if __name__ == "__main__":
         robot = Robot(name=f"Robot{i+1}")
         robot.position = Vector2(random.randint(0, screen_width), random.randint(0, screen_height))
         robot.angle = random.choice(angles)  # Random angle for the robot
-        robot.stop()  # Stop the robot initially
+        robot.move()  # Start moving the robot
+        # robot.stop()  # Stop the robot initially
         moving_objs.append(robot)
 
 
@@ -54,7 +55,6 @@ if __name__ == "__main__":
                 bulletUI.update(screen)
             # robot instance
             if isinstance(moving_obj, Robot):
-                moving_obj.angle = angles[i]
                 robotUI = RobotUI(moving_obj)
                 robotUI.update(screen)
 

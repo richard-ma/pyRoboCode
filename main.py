@@ -9,7 +9,7 @@ from UI.robotUI import RobotUI
 
 
 if __name__ == "__main__":
-    fps = 1
+    fps = 30
     screen_width, screen_height = 800, 600
     pygame.init()
     screen = pygame.display.set_mode((screen_width, screen_height))

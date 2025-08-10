@@ -10,4 +10,5 @@ class RobotUI:
 
     def update(self, screen):
         image = pygame.image.load("images/small.png")
+        image = pygame.transform.rotate(image, self.obj.angle)
         screen.blit(image, self.obj.position)

@@ -34,10 +34,18 @@ class Robot(Sprite):
         self.movingUnit = 2.0
 
         self.isTurning = False
+        self.turningAngle = 0
+
+        self.current_frame = 0
+        self.turn_animation_duration = 1 # second(s)
 
     def turn(self, angle):
-        self.angle = (self.angle + angle) % 360
-        self.isTurning = True
+        if self.isTurning:
+            return # 正在转向时直接跳过新的设定
+        # Normalize the angle to be within 0-360 degrees
+        self.turningAngle = angle
+        #self.angle = (self.angle + angle) % 360
+        self.isTurning = True # start turning animation
     
     def move(self):
         self.isMoving = True
@@ -51,17 +59,26 @@ class Robot(Sprite):
         bullet.angle = self.gun.angle
         bullet.isMoving = True
 
-    def update(self, *args, **kwargs):
+    def update(self, screen, fps, *args, **kwargs):
         if self.isTurning:
-            pass
+            if self.current_frame < self.turn_animation_duration * fps:
+                self.current_frame += 1
+                # # 计算当前帧的角度
+                # angle_step = self.turningAngle / (self.turn_animation_duration * clock.get_fps())
+                # # 更新角度
+                # self.angle = (self.angle + angle_step) % 360
+            else:
+                self.angle = (self.angle + self.turningAngle) % 360
+                self.isTurning = False # reset turning state
+                self.current_frame = 0 # reset frame count
         elif self.isMoving:
             dx = math.sin(math.radians(self.angle)) * self.movingUnit
             dy = - math.cos(math.radians(self.angle)) * self.movingUnit # y axis is inverted in pygame
             self.rect.center = Vector2(self.rect.centerx + dx, self.rect.centery + dy)
 
-        self.draw(*args, **kwargs)
+        self.draw(screen=screen, *args, **kwargs)
     
-    def draw(self, screen):
+    def draw(self, screen, *args, **kwargs):
         # Rotate the image based on the angle
         rotated_image = pygame.transform.rotate(self.image, -self.angle)
         new_rect = rotated_image.get_rect(center=self.rect.center)

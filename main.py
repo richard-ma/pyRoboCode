@@ -17,10 +17,11 @@ if __name__ == "__main__":
     pygame.display.set_caption("Python RoboCode")
 
     tank_group = Group()
-    for i in range(6):
+    for i in range(4):
         robot = Robot(name=f"Robot{i+1}")
         robot.rect.center = Vector2(random.randint(0, screen_width), random.randint(0, screen_height))
-        robot.angle = random.choice([0, 90, 180, 270])
+        robot.angle = [0, 90, 180, 270][i]
+        robot.move()
         tank_group.add(robot)
 
 

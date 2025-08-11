@@ -6,7 +6,6 @@ import math
 import pygame
 from pygame.sprite import Sprite
 from pygame.math import Vector2
-from Objects.movingObj import MovingObj
 from Objects.bullet import Bullet
 
 

@@ -39,9 +39,6 @@ if __name__ == "__main__":
 
         screen.fill((0, 0, 0))  # Fill the screen with black
 
-        if clock.get_fps() < 0.9: # 帧率一开始可能上不来，影响动画播放
-            continue
-
         if turnFlg:
             for robot in tank_group:
                 robot.turn(90)  

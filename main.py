@@ -21,10 +21,10 @@ if __name__ == "__main__":
     for i in range(4):
         robot = Robot(name=f"Robot{i+1}")
         robot.rect.center = Vector2(random.randint(0, screen_width), random.randint(0, screen_height))
-        robot.angle = [0, 90, 180, 270][i]
-        robot.move()
+        robot.angle = [0, 90, 180, 270][0]
         tank_group.add(robot)
 
+    turnFlg = True
 
     running = True
     while running:
@@ -39,9 +39,15 @@ if __name__ == "__main__":
 
         screen.fill((0, 0, 0))  # Fill the screen with black
 
-        for robot in tank_group.sprites():
-            robot.angle += 45
-        tank_group.update(screen=screen, clock=clock)
+        if clock.get_fps() < 0.9: # 帧率一开始可能上不来，影响动画播放
+            continue
+
+        if turnFlg:
+            for robot in tank_group:
+                robot.turn(90)  
+            turnFlg = False
+
+        tank_group.update(screen=screen, fps=fps)
 
         pygame.display.flip()
 

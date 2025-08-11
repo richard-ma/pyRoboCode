@@ -12,11 +12,11 @@ from Objects.bullet import Bullet
 
 class Gun:
     def __init__(self):
-        pass
+        self.angle = 0
 
 class Radar:
     def __init__(self):
-        pass
+        self.angle = 0
         
 class Robot(Sprite):
     def __init__(self, name):

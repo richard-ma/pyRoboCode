@@ -12,10 +12,34 @@ from Objects.bullet import Bullet
 class Gun:
     def __init__(self):
         self.angle = 0
+        self.locked = False
+    
+    def lockTurn(self):
+        self.locked = True
+    
+    def unlockTurn(self):
+        self.locked = False
+    
+    def turn(self, angle):
+        if not self.locked:
+            # Normalize the angle to be within 0-360 degrees
+            self.angle = (self.angle + angle) % 360
 
 class Radar:
     def __init__(self):
         self.angle = 0
+        self.locked = False
+
+    def lockTurn(self):
+        self.locked = True
+
+    def unlockTurn(self):
+        self.locked = False
+    
+    def turn(self, angle):
+        if not self.locked:
+            # Normalize the angle to be within 0-360 degrees
+            self.angle = (self.angle + angle) % 360
         
 class Robot(Sprite):
     def __init__(self, name):

@@ -15,6 +15,7 @@ if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Python RoboCode")
+    clock = pygame.time.Clock()
 
     tank_group = Group()
     for i in range(4):
@@ -27,7 +28,7 @@ if __name__ == "__main__":
 
     running = True
     while running:
-        pygame.time.Clock().tick(fps)  # Limit to 60 FPS
+        clock.tick(fps)  # Limit to 60 FPS
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT: # Check for window close
@@ -38,7 +39,9 @@ if __name__ == "__main__":
 
         screen.fill((0, 0, 0))  # Fill the screen with black
 
-        tank_group.update(screen=screen)
+        for robot in tank_group.sprites():
+            robot.angle += 45
+        tank_group.update(screen=screen, clock=clock)
 
         pygame.display.flip()
 

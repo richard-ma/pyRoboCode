@@ -33,8 +33,11 @@ class Robot(Sprite):
         self.isMoving = False
         self.movingUnit = 2.0
 
+        self.isTurning = False
+
     def turn(self, angle):
         self.angle = (self.angle + angle) % 360
+        self.isTurning = True
     
     def move(self):
         self.isMoving = True
@@ -49,7 +52,9 @@ class Robot(Sprite):
         bullet.isMoving = True
 
     def update(self, *args, **kwargs):
-        if self.isMoving:
+        if self.isTurning:
+            pass
+        elif self.isMoving:
             dx = math.sin(math.radians(self.angle)) * self.movingUnit
             dy = - math.cos(math.radians(self.angle)) * self.movingUnit # y axis is inverted in pygame
             self.rect.center = Vector2(self.rect.centerx + dx, self.rect.centery + dy)

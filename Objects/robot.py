@@ -35,7 +35,6 @@ class Robot(Sprite):
 
     def turn(self, angle):
         self.angle = (self.angle + angle) % 360
-        return self.angle
     
     def move(self):
         self.isMoving = True

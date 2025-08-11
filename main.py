@@ -1,6 +1,7 @@
 import pygame
 import random
 from pygame.math import Vector2
+from pygame.sprite import Group
 from Objects.movingObj import MovingObj
 from Objects.bullet import Bullet
 from Objects.robot import Robot
@@ -15,24 +16,12 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Python RoboCode")
 
-    # all moving objects list
-    moving_objs = []
-
-    angles = [0, 45, 90, 135, 180, 225, 270, 315]
-    for i in range(8):  # Create 5 bullets for demonstration
-        bullet = Bullet(power=9, bot=None)  # Assuming bot is not used in this context
-        bullet.position = Vector2(screen_width//2, screen_height//2)  # Start in the center of the screen
-        bullet.isMoving = True
-        bullet.angle = angles[i]  # Set an angle for the bullet
-        # moving_objs.append(bullet) # append the bullet to the moving objects list
-
-    for i in range(3):
+    tank_group = Group()
+    for i in range(6):
         robot = Robot(name=f"Robot{i+1}")
-        robot.position = Vector2(random.randint(0, screen_width), random.randint(0, screen_height))
-        robot.angle = random.choice(angles)  # Random angle for the robot
-        robot.move()  # Start moving the robot
-        # robot.stop()  # Stop the robot initially
-        moving_objs.append(robot)
+        robot.rect.center = Vector2(random.randint(0, screen_width), random.randint(0, screen_height))
+        robot.angle = random.choice([0, 90, 180, 270])
+        tank_group.add(robot)
 
 
     running = True
@@ -48,15 +37,7 @@ if __name__ == "__main__":
 
         screen.fill((0, 0, 0))  # Fill the screen with black
 
-        for moving_obj in moving_objs:
-            # bullet instance
-            if isinstance(moving_obj, Bullet):
-                bulletUI = BulletUI(moving_obj)
-                bulletUI.update(screen)
-            # robot instance
-            if isinstance(moving_obj, Robot):
-                robotUI = RobotUI(moving_obj)
-                robotUI.update(screen)
+        tank_group.update(screen=screen)
 
         pygame.display.flip()
 

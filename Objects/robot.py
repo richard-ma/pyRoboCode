@@ -1,20 +1,24 @@
 #! /usr/bin/python
 #-*- coding: utf-8 -*-
 
-import time, os, math
+# import time, os, math
+import math
+import pygame
+from pygame.sprite import Sprite
+from pygame.math import Vector2
 from Objects.movingObj import MovingObj
 from Objects.bullet import Bullet
 
 
-class Gun(MovingObj):
+class Gun:
     def __init__(self):
-        super().__init__()
+        pass
 
-class Radar(MovingObj):
+class Radar:
     def __init__(self):
-        super().__init__()
+        pass
         
-class Robot(MovingObj):
+class Robot(Sprite):
     def __init__(self, name):
         super().__init__()
         self.name = name
@@ -23,26 +27,41 @@ class Robot(MovingObj):
         self.health = 100
         self.bullets = []
 
-    def lockTurn(self):
-        pass # Override to prevent turning
+        self.image = pygame.image.load("images/small.png")
+        self.rect = self.image.get_rect()
+        self.angle = 0
+        self.isMoving = False
+        self.movingUnit = 2.0
+
+    def turn(self, angle):
+        self.angle = (self.angle + angle) % 360
+        return self.angle
     
     def move(self):
-        super().move()
-        self.gun.move()
-        self.radar.move()
+        self.isMoving = True
 
     def stop(self):
-        super().stop()
-        self.gun.stop()
-        self.radar.stop()
+        self.isMoving = False
 
     def fire(self, power):
         # make bullet
         bullet = Bullet(power, self)
-        bullet.position = self.position.copy()
         bullet.angle = self.gun.angle
         bullet.isMoving = True
 
+    def update(self, *args, **kwargs):
+        if self.isMoving:
+            dx = math.sin(math.radians(self.angle)) * self.movingUnit
+            dy = - math.cos(math.radians(self.angle)) * self.movingUnit # y axis is inverted in pygame
+            self.rect.center = Vector2(self.rect.centerx + dx, self.rect.centery + dy)
+
+        self.draw(*args, **kwargs)
+    
+    def draw(self, screen):
+        # Rotate the image based on the angle
+        rotated_image = pygame.transform.rotate(self.image, -self.angle)
+        new_rect = rotated_image.get_rect(center=self.rect.center)
+        screen.blit(rotated_image, new_rect.topleft )
 
 # import traceback
 

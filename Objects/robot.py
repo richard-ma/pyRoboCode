@@ -63,6 +63,7 @@ class Robot(Sprite):
         if self.isTurning:
             if self.current_frame < self.turn_animation_duration * fps:
                 self.current_frame += 1
+                # TODO: 这里可以做成平滑转向
                 # # 计算当前帧的角度
                 # angle_step = self.turningAngle / (self.turn_animation_duration * clock.get_fps())
                 # # 更新角度
